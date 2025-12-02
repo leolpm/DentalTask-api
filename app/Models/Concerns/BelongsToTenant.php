@@ -14,7 +14,7 @@ trait BelongsToTenant
         static::creating(function ($model) {
             // Se não veio tenant_id explícito, tenta pegar do usuário logado
             if (empty($model->tenant_id) && Auth::check()) {
-                $model->tenant_id = Auth::user()->tenant_id;
+                $model->tenant_id = data_get(Auth::user(), 'tenant_id');
             }
         });
 

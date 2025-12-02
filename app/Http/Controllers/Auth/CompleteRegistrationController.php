@@ -9,8 +9,10 @@ use Inertia\Inertia;
 
 class CompleteRegistrationController extends Controller
 {
-    public function edit(Request $request, Tenant $tenant)
+    public function edit(Request $request, $tenant)
     {
+        $tenant = Tenant::findOrFail($tenant);
+
         // aqui você pode validar se o usuário logado é dono desse tenant, etc.
 
         $user = $request->user();
@@ -28,8 +30,9 @@ class CompleteRegistrationController extends Controller
         ]);
     }
 
-    public function update(Request $request, Tenant $tenant)
+    public function update(Request $request, $tenant)
     {
+        $tenant = Tenant::findOrFail($tenant);
         $data = $request->validate([
             'tenant_id'    => ['required', 'integer'],
             'company_name' => ['required', 'string', 'max:255'],
