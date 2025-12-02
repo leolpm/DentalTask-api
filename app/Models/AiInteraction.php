@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class AiInteraction extends Model
 {
-    use HasFactory, BelongsToTenant;
+    use BelongsToTenant, HasFactory;
 
     protected $fillable = [
         'tenant_id',
@@ -21,7 +21,7 @@ class AiInteraction extends Model
     ];
 
     protected $casts = [
-        'request_payload'  => 'array',
+        'request_payload' => 'array',
         'response_payload' => 'array',
     ];
 

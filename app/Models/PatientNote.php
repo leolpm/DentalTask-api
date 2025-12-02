@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PatientNote extends Model
 {
-    use HasFactory, BelongsToTenant;
+    use BelongsToTenant, HasFactory;
 
     protected $fillable = [
         'tenant_id',
@@ -29,9 +29,9 @@ class PatientNote extends Model
     ];
 
     protected $casts = [
-        'tags'               => 'array',
-        'metadata'           => 'array',
-        'is_pinned'          => 'boolean',
+        'tags' => 'array',
+        'metadata' => 'array',
+        'is_pinned' => 'boolean',
         'visible_to_patient' => 'boolean',
     ];
 

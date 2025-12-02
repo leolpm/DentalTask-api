@@ -63,14 +63,14 @@ class SocialiteController extends Controller
             ]);
             $user = User::create([
                 // se tiver tenant_id obrigatório, aqui a gente ajusta depois
-                'tenant_id'   => $tenant->id,
-                'name'        => $googleUser->getName()
+                'tenant_id' => $tenant->id,
+                'name' => $googleUser->getName()
                     ?: $googleUser->getNickname()
                     ?: $googleUser->getEmail(),
-                'email'       => $googleUser->getEmail(),
+                'email' => $googleUser->getEmail(),
                 // senha aleatória só pra cumprir contrato da tabela
-                'password'    => Hash::make(Str::random(40)),
-                'provider'    => 'google',
+                'password' => Hash::make(Str::random(40)),
+                'provider' => 'google',
                 'provider_id' => $googleUser->getId(),
 
                 // se a sua tabela tiver company_name, phone etc e puderem ser nulos:
@@ -86,7 +86,7 @@ class SocialiteController extends Controller
         } else {
             // 4) Se já existe, só garante que provider e provider_id estão atualizados
             $user->update([
-                'provider'    => 'google',
+                'provider' => 'google',
                 'provider_id' => $googleUser->getId(),
             ]);
         }

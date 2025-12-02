@@ -23,10 +23,10 @@ class CompleteRegistrationController extends Controller
         }
 
         return Inertia::render('Auth/CompleteRegistration', [
-            'tenantId'     => $tenant->id,
+            'tenantId' => $tenant->id,
             'company_name' => $tenant->name ?? '',
-            'email'        => $user->email,
-            'phone'        => $user->phone ?? '',
+            'email' => $user->email,
+            'phone' => $user->phone ?? '',
         ]);
     }
 
@@ -34,31 +34,31 @@ class CompleteRegistrationController extends Controller
     {
         $tenant = Tenant::findOrFail($tenant);
         $data = $request->validate([
-            'tenant_id'    => ['required', 'integer'],
+            'tenant_id' => ['required', 'integer'],
             'company_name' => ['required', 'string', 'max:255'],
-            'email'        => ['required', 'email'],
-            'phone'        => ['nullable', 'string', 'max:50'],
-            'document'     => ['required', 'string', 'max:20'],
-            'cep'          => ['required', 'string', 'max:9'],
-            'address'      => ['required', 'string', 'max:255'],
-            'number'       => ['required', 'string', 'max:50'],
-            'complement'   => ['nullable', 'string', 'max:255'],
-            'district'     => ['required', 'string', 'max:255'],
-            'city'         => ['required', 'string', 'max:255'],
-            'state'        => ['required', 'string', 'max:2'],
+            'email' => ['required', 'email'],
+            'phone' => ['nullable', 'string', 'max:50'],
+            'document' => ['required', 'string', 'max:20'],
+            'cep' => ['required', 'string', 'max:9'],
+            'address' => ['required', 'string', 'max:255'],
+            'number' => ['required', 'string', 'max:50'],
+            'complement' => ['nullable', 'string', 'max:255'],
+            'district' => ['required', 'string', 'max:255'],
+            'city' => ['required', 'string', 'max:255'],
+            'state' => ['required', 'string', 'max:2'],
         ]);
 
         // Atualiza o tenant (ajuste nomes de colunas conforme sua migration)
         $tenant->update([
-            'name'        => $data['company_name'],
-            'document'    => $data['document'], // CPF/CNPJ (formatado ou só dígitos, você decide)
-            'cep'         => $data['cep'],
-            'address'     => $data['address'],
-            'number'      => $data['number'],
-            'complement'  => $data['complement'] ?? null,
-            'district'    => $data['district'],
-            'city'        => $data['city'],
-            'state'       => strtoupper($data['state']),
+            'name' => $data['company_name'],
+            'document' => $data['document'], // CPF/CNPJ (formatado ou só dígitos, você decide)
+            'cep' => $data['cep'],
+            'address' => $data['address'],
+            'number' => $data['number'],
+            'complement' => $data['complement'] ?? null,
+            'district' => $data['district'],
+            'city' => $data['city'],
+            'state' => strtoupper($data['state']),
             'is_completed' => true,
         ]);
 

@@ -3,8 +3,8 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
 class LoginCodeNotification extends Notification
 {
@@ -26,7 +26,7 @@ class LoginCodeNotification extends Notification
             ->subject('Seu código de acesso - DentalTask AI')
             ->markdown('emails.auth.login_code', [
                 'code' => $this->code,
-                'url'  => $this->url,
+                'url' => $this->url,
             ]);
     }
 }

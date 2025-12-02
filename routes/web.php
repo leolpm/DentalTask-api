@@ -19,7 +19,7 @@ Route::middleware([
     'verified',      // Laravel já reconhece direto
     'tenant.completed',
 ])->group(function () {
-    
+
     Route::get('/dashboard', function () {
         return inertia('Dashboard');
     })->name('dashboard');

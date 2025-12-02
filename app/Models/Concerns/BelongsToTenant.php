@@ -20,14 +20,14 @@ trait BelongsToTenant
 
         static::addGlobalScope('tenant', function (Builder $builder) {
             // Super admin enxerga tudo
-            if (Auth::check() && Auth::user()->is_super_admin) {
+            if (Auth::check() && data_get(Auth::user(), 'is_super_admin')) {
                 return;
             }
 
             if (Auth::check()) {
                 $builder->where(
-                    $builder->getModel()->getTable() . '.tenant_id',
-                    Auth::user()->tenant_id
+                    $builder->getModel()->getTable().'.tenant_id',
+                    data_get(Auth::user(), 'tenant_id')
                 );
             }
         });

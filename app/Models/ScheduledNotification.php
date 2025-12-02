@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ScheduledNotification extends Model
 {
-    use HasFactory, BelongsToTenant;
+    use BelongsToTenant, HasFactory;
 
     protected $fillable = [
         'tenant_id',
@@ -26,8 +26,8 @@ class ScheduledNotification extends Model
 
     protected $casts = [
         'scheduled_for' => 'datetime',
-        'sent_at'       => 'datetime',
-        'payload'       => 'array',
+        'sent_at' => 'datetime',
+        'payload' => 'array',
     ];
 
     public function patient(): BelongsTo

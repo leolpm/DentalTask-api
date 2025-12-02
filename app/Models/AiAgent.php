@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class AiAgent extends Model
 {
-    use HasFactory, BelongsToTenant;
+    use BelongsToTenant, HasFactory;
 
     protected $fillable = [
         'tenant_id',
@@ -21,7 +21,7 @@ class AiAgent extends Model
     ];
 
     protected $casts = [
-        'config'    => 'array',
+        'config' => 'array',
         'is_active' => 'boolean',
     ];
 

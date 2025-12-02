@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Appointment extends Model
 {
-    use HasFactory, BelongsToTenant;
+    use BelongsToTenant, HasFactory;
 
     protected $fillable = [
         'tenant_id',
@@ -25,7 +25,7 @@ class Appointment extends Model
 
     protected $casts = [
         'start_at' => 'datetime',
-        'end_at'   => 'datetime',
+        'end_at' => 'datetime',
     ];
 
     public function patient(): BelongsTo

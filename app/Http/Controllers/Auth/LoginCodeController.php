@@ -46,22 +46,22 @@ class LoginCodeController extends Controller
                 'channel' => 'email',
             ],
             [
-                'code'       => Hash::make($plainCode),
-                'sent_to'    => $user->email,
+                'code' => Hash::make($plainCode),
+                'sent_to' => $user->email,
                 'expires_at' => now()->addMinutes(10),
             ]
         );
 
         // URL da tela de digitar o código
         $url = route('login.code.verify', [
-            'email'   => $user->email,
+            'email' => $user->email,
             'user_id' => $user->id,
         ]);
 
         $user->notify(new LoginCodeNotification($plainCode, $url));
 
         return redirect()->route('login.code.verify', [
-            'email'   => $user->email,
+            'email' => $user->email,
             'user_id' => $user->id,
         ]);
     }
@@ -70,7 +70,7 @@ class LoginCodeController extends Controller
     public function showVerify(Request $request)
     {
         return Inertia::render('Auth/VerifyCode', [
-            'step'  => 'verify',
+            'step' => 'verify',
             'email' => $request->get('email'),
             'user_id' => $request->get('user_id'),
         ]);
@@ -82,12 +82,12 @@ class LoginCodeController extends Controller
         $request->validate([
             'user_id' => ['required', 'integer'],
             'email' => ['required', 'email'],
-            'code'  => ['required', 'string'],
+            'code' => ['required', 'string'],
         ]);
 
         $record = AuthCode::where('user_id', $request->user_id)
             ->where('sent_to', $request->email)
-        ->first();
+            ->first();
 
         if (! $record) {
             return back()->withErrors([

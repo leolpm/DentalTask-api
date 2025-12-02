@@ -6,6 +6,23 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $document
+ * @property string $subdomain
+ * @property string|null $whatsapp_number
+ * @property string $status
+ * @property string $email
+ * @property string|null $logo_path
+ * @property string|null $phone
+ * @property bool $is_completed
+ * @property string|null $address
+ * @property string|null $city
+ * @property string|null $state
+ * @property string|null $zip_code
+ * @property string $plan
+ */
 class Tenant extends Model
 {
     use HasFactory;
