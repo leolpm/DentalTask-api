@@ -26,6 +26,8 @@
         <main class="main" id="top">
             @inertia
         </main>
+        <script src="{{ asset('assets/js/config.js') }}"></script>
+        <script src="{{ asset('vendors/lodash/lodash.min.js') }}"></script>
         <script src="{{ asset('vendors/popper/popper.min.js') }}"></script>
         <script src="{{ asset('vendors/bootstrap/bootstrap.min.js') }}"></script>
         <script src="{{ asset('assets/js/phoenix.js') }}"></script>
