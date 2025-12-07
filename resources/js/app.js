@@ -41,3 +41,17 @@ createInertiaApp({
         color: '#4B5563',
     },
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const theme = localStorage.getItem('phoenixTheme');
+    if (theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+    }
+});
+
+document.addEventListener('inertia:load', () => {
+    const theme = localStorage.getItem('phoenixTheme');
+    if (theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+    }
+});

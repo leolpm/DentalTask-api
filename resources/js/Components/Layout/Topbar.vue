@@ -44,16 +44,6 @@
             <span class="theme-icon-active"></span>
           </a>
 
-          <button
-            class="btn theme-toggle btn-icon"
-            type="button"
-            :class="{ 'theme-toggle-dark': theme === 'dark' }"
-            @click="$emit('toggle-theme')"
-            aria-label="Alternar tema"
-          >
-            <i :class="theme === 'dark' ? 'bi bi-moon-fill' : 'bi bi-sun-fill'"></i>
-          </button>
-
           <button class="btn bell-btn btn-icon" type="button" aria-label="Notificacoes">
             <i class="bi bi-bell"></i>
           </button>
