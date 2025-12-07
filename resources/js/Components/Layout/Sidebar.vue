@@ -1,152 +1,194 @@
 <!-- resources/js/Components/Layout/Sidebar.vue -->
 <template>
-  <nav
-    class="navbar navbar-vertical navbar-expand-lg navbar-light bg-white border-end shadow-sm"
-    style="width: 260px;"
+  <aside
+    class="sidebar shadow-sm"
+    :class="{
+      'is-open': open,
+      'is-collapsed': !open && !isMobile,
+      'is-mobile': isMobile,
+    }"
   >
-    <div class="d-flex flex-column h-100">
-      <!-- Logo + nome do sistema -->
-      <div class="d-flex align-items-center px-3 py-3 border-bottom">
-        <a href="/" class="d-flex align-items-center text-decoration-none">
-          <img
-            src="/assets/img/favicons/apple-touch-icon.png"
-            alt="DentalTask AI"
-            width="32"
-            class="me-2"
-          />
-          <div class="d-flex flex-column">
-            <span class="fw-bold">DentalTask AI</span>
-            <small class="text-muted">Consultório de Saúde Bucal</small>
-          </div>
-        </a>
-      </div>
-
-      <!-- Menu -->
-      <div class="flex-grow-1 overflow-auto">
-        <ul class="navbar-nav pt-3">
-          <li class="nav-item">
+    <div class="sidebar-inner d-flex flex-column h-100">
+      <div class="flex-grow-1 overflow-auto py-3">
+        <ul class="nav flex-column gap-1 px-2">
+          <li v-for="item in menuItems" :key="item.label" class="nav-item">
             <Link
-              :href="route('dashboard')"
-              class="nav-link d-flex align-items-center px-3 py-2"
-              :class="{ active: isCurrent('dashboard') }"
+              v-if="item.route && hasRoute(item.route)"
+              :href="route(item.route)"
+              class="nav-link d-flex align-items-center"
+              :class="{ active: isCurrent(item.route) }"
+              :title="!open && !isMobile ? item.label : null"
+              aria-current="page"
             >
-              <i class="bi bi-lightbulb me-2"></i>
-              <span>Inteligência</span>
+              <i :class="['bi', item.icon]"></i>
+              <span class="label-text flex-grow-1">{{ item.label }}</span>
             </Link>
-          </li>
-
-          <li class="nav-item">
-            <Link
-              :href="route('patients.index')"
-              class="nav-link d-flex align-items-center px-3 py-2"
-              :class="{ active: isCurrent('patients.index') }"
+            <div
+              v-else
+              class="nav-link disabled-link d-flex align-items-center"
+              :title="!open && !isMobile ? item.label : null"
             >
-              <i class="bi bi-people me-2"></i>
-              <span>Pacientes</span>
-            </Link>
-          </li>
-
-          <li class="nav-item">
-            <Link
-              :href="route('agenda.index')"
-              class="nav-link d-flex align-items-center px-3 py-2"
-              :class="{ active: isCurrent('agenda.index') }"
-            >
-              <i class="bi bi-calendar3 me-2"></i>
-              <span>Agenda</span>
-            </Link>
-          </li>
-
-          <li class="nav-item">
-            <Link
-              :href="route('sales.index')"
-              class="nav-link d-flex align-items-center px-3 py-2"
-              :class="{ active: isCurrent('sales.index') }"
-            >
-              <i class="bi bi-receipt me-2"></i>
-              <span>Vendas</span>
-            </Link>
-          </li>
-
-          <li class="nav-item">
-            <Link
-              :href="route('finance.index')"
-              class="nav-link d-flex align-items-center px-3 py-2"
-              :class="{ active: isCurrent('finance.index') }"
-            >
-              <i class="bi bi-cash-stack me-2"></i>
-              <span>Financeiro</span>
-            </Link>
-          </li>
-
-          <li class="nav-item">
-            <Link
-              :href="route('lab.index')"
-              class="nav-link d-flex align-items-center px-3 py-2"
-              :class="{ active: isCurrent('lab.index') }"
-            >
-              <i class="bi bi-badge-3d me-2"></i>
-              <span>Controle de prótese</span>
-            </Link>
-          </li>
-
-          <li class="nav-item">
-            <Link
-              :href="route('marketing.index')"
-              class="nav-link d-flex align-items-center px-3 py-2"
-              :class="{ active: isCurrent('marketing.index') }"
-            >
-              <i class="bi bi-megaphone me-2"></i>
-              <span>Marketing</span>
-            </Link>
-          </li>
-
-          <li class="nav-item">
-            <Link
-              :href="route('settings.index')"
-              class="nav-link d-flex align-items-center px-3 py-2"
-              :class="{ active: isCurrent('settings.index') }"
-            >
-              <i class="bi bi-gear me-2"></i>
-              <span>Ajustes</span>
-            </Link>
+              <i :class="['bi', item.icon]"></i>
+              <span class="label-text">{{ item.label }}</span>
+            </div>
           </li>
         </ul>
       </div>
 
-      <!-- Rodapé do menu -->
       <div class="border-top px-3 py-3 small text-muted">
-        <i class="bi bi-info-circle me-1"></i>
-        Versão 1.0.0
+        <i class="bi bi-info-circle me-2"></i>
+        Versao 1.0.0
       </div>
     </div>
-  </nav>
+  </aside>
 </template>
 
 <script setup>
-import { Link, usePage } from '@inertiajs/vue3'
-import { computed } from 'vue'
+import { Link } from '@inertiajs/vue3'
 
-const page = usePage()
+defineProps({
+  open: {
+    type: Boolean,
+    default: true,
+  },
+  isMobile: {
+    type: Boolean,
+    default: false,
+  },
+})
 
-const isCurrent = (name) =>
-  computed(() => page.props?.ziggy?.location && route().current(name)).value
+const menuItems = [
+  { label: 'Agenda', icon: 'bi-calendar-event', route: 'schedule.index' },
+  { label: 'Pacientes', icon: 'bi-people', route: 'patients.index' },
+  { label: 'Financeiro', icon: 'bi-cash-coin', route: 'financial.index' },
+  { label: 'Relatorios', icon: 'bi-bar-chart', route: 'reports.index' },
+  { label: 'Configuracoes', icon: 'bi-gear', route: 'settings.index' },
+]
+
+const hasRoute = (name) => {
+  try {
+    return route().has(name)
+  } catch (e) {
+    return false
+  }
+}
+
+const isCurrent = (name) => {
+  try {
+    return route().current(name)
+  } catch (e) {
+    return false
+  }
+}
 </script>
 
 <style scoped>
+.sidebar {
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 80px;
+  width: var(--sidebar-width);
+  min-height: 100vh;
+  flex-shrink: 0;
+  transition: width 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  z-index: 1045;
+  border-right: 1px solid #e5e7eb;
+  box-shadow: 0 10px 35px rgba(15, 23, 42, 0.08);
+  background: #fff;
+}
+
+.sidebar.is-collapsed {
+  width: var(--sidebar-collapsed-width);
+}
+
+.sidebar.is-mobile {
+  position: fixed;
+  top: 72px;
+  left: 0;
+  height: calc(100vh - 72px);
+  transform: translateX(-100%);
+}
+
+.sidebar.is-mobile.is-open {
+  transform: translateX(0);
+}
+
+.sidebar-inner {
+  height: 100%;
+}
+
 .nav-link {
-  border-radius: 0.5rem;
-  color: #6c757d;
-  font-weight: 500;
+  border-radius: 0.85rem;
+  color: #4b5563;
+  font-weight: 600;
+  padding: 0.65rem 0.9rem;
+  gap: 0.85rem;
+  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.nav-link i {
+  font-size: 1rem;
 }
 
 .nav-link:hover {
-  background-color: #f1f3f9;
-  color: #111827;
+  background-color: #f1f5f9;
+  color: #0f172a;
 }
 
 .nav-link.active {
   background: linear-gradient(135deg, #0d6efd, #4b8dff);
   color: #fff !important;
+  box-shadow: 0 0.75rem 1.5rem rgba(13, 110, 253, 0.18);
+}
+
+.disabled-link {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.label-text {
+  white-space: nowrap;
+  transition: opacity 0.2s ease, width 0.2s ease, margin 0.2s ease;
+}
+
+.sidebar.is-collapsed .label-text,
+.sidebar.is-collapsed .brand-text {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+  margin: 0;
+}
+
+.sidebar.is-collapsed .brand-logo {
+  margin: 0 auto;
+}
+
+.sidebar.is-collapsed .nav-link {
+  justify-content: center;
+}
+
+.sidebar.is-collapsed .nav-link i {
+  margin-right: 0 !important;
+}
+
+@media (max-width: 991.98px) {
+  .sidebar {
+    width: var(--sidebar-width);
+    box-shadow: 0 1rem 3rem rgba(15, 23, 42, 0.16);
+  }
+}
+
+:global(html[data-bs-theme='dark']) .sidebar .nav-link {
+  color: #cbd5e1;
+}
+
+:global(html[data-bs-theme='dark']) .sidebar .nav-link:hover {
+  background-color: #1f2937;
+  color: #fff;
+}
+
+:global(html[data-bs-theme='dark']) .sidebar .nav-link.active {
+  background: linear-gradient(135deg, #2563eb, #4b8dff);
+  color: #fff !important;
+  box-shadow: 0 0.75rem 1.5rem rgba(37, 99, 235, 0.25);
 }
 </style>

@@ -7,6 +7,22 @@ import { createApp, h } from 'vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const THEME_KEY = 'phoenixTheme';
+
+const applyStoredTheme = () => {
+    const theme = localStorage.getItem(THEME_KEY);
+    if (theme) {
+        const resolved =
+            theme === 'auto'
+                ? (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+                : theme;
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.setAttribute('data-bs-theme', resolved);
+    }
+};
+
+document.addEventListener('DOMContentLoaded', applyStoredTheme);
+document.addEventListener('inertia:load', applyStoredTheme);
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

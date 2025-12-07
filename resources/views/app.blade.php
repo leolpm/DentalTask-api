@@ -1,5 +1,10 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"
+      data-theme="light"
+      data-layout="vertical"
+      data-nav="default"
+      data-menu="light"
+      data-footer="light">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,6 +18,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="{{ asset('assets/css/theme.min.css') }}" id="style-default">
+        <link rel="stylesheet" href="{{ asset('assets/css/theme-dark.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/user.min.css') }}" id="user-style-default">
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -27,6 +33,7 @@
             @inertia
         </main>
         <script src="{{ asset('assets/js/config.js') }}"></script>
+        <script src="{{ asset('assets/js/theme.js') }}"></script>
         <script src="{{ asset('vendors/lodash/lodash.min.js') }}"></script>
         <script src="{{ asset('vendors/popper/popper.min.js') }}"></script>
         <script src="{{ asset('vendors/bootstrap/bootstrap.min.js') }}"></script>
